@@ -1,0 +1,64 @@
+   {% extends "base.html" %}
+
+   {% block head_title %}
+   {{ super() }}: inicio
+   {% endblock %}
+
+   {% block page_title %}
+     Listado de movimientos
+   {% endblock %}
+
+   {% block contenido %}
+   {{ super() }}
+
+
+
+   <table class="paper">
+      <tr>
+        <th class="titulo-tabla">Fecha</th>
+        <th class="titulo-tabla">Hora</th>
+        <th class="titulo-tabla">Moneda From</th>
+        <th class="titulo-tabla">Cantidad From</th>
+        <th class="titulo-tabla">Moneda to</th>
+        <th class="titulo-tabla">Cantidad to</th>
+        <th class="titulo-tabla">P.U</th>
+      </tr>
+
+      {% if movs %}
+        {% for mov in movs %}
+        <tr>
+          <td>{{mov[1] }}</td>
+          <td>{{mov[2] }}</td>
+          <td>{{mov[3] }}</td>
+          <td>{{mov[4] }}</td>
+          <td>{{mov[5] }}</td>
+          <td>{{"{:,.5f}".format(mov[6])}}</td>
+          <td>{{"{:,.5f}".format(movimiento[4]/movimiento[6])}}</td>
+        </tr>
+
+        {% if mov.errores %}
+        <tr>
+          <td colspan="7" class="error">
+          {% for error in mov.errores %}
+            {{ error }}.
+          {% endfor %}
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      {% else %}
+      <tr>
+        <td colspan="4" class="lista-vacia">No hay movimientos que mostar</td>
+      </tr>
+      {% endif %}
+    </table>
+
+    <div class="container">
+      <a href="/status" role="button" class="outline">Estado</a>
+
+      <a class="mini-boton" href="/purchase"><p><ion-icon name="add-outline"></ion-icon></p></a>
+    </div>
+
+
+    {% endblock %}
+ 
