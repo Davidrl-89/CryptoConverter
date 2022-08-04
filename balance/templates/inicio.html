@@ -5,7 +5,7 @@
    {% endblock %}
 
    {% block page_title %}
-     Listado de movimientos
+     MOVIMIENTOS
    {% endblock %}
 
    {% block contenido %}
@@ -17,10 +17,10 @@
       <tr>
         <th class="titulo-tabla">Fecha</th>
         <th class="titulo-tabla">Hora</th>
-        <th class="titulo-tabla">Moneda From</th>
-        <th class="titulo-tabla">Cantidad From</th>
-        <th class="titulo-tabla">Moneda to</th>
-        <th class="titulo-tabla">Cantidad to</th>
+        <th class="titulo-tabla">From</th>
+        <th class="titulo-tabla">Q</th>
+        <th class="titulo-tabla">To</th>
+        <th class="titulo-tabla">Q</th>
         <th class="titulo-tabla">P.U</th>
       </tr>
 
@@ -48,16 +48,38 @@
         {% endfor %}
       {% else %}
       <tr>
-        <td colspan="4" class="lista-vacia">No hay movimientos que mostar</td>
+        <td colspan="7" class="lista-vacia">No hay movimientos que mostar</td>
       </tr>
       {% endif %}
+
+   
+
+
     </table>
 
-    <div class="container">
-      <a href="/status" role="button" class="outline">Estado</a>
+   
 
-      <a class="mini-boton" href="/purchase"><p><ion-icon name="add-outline"></ion-icon></p></a>
+    <div class="botones">
+    <div class="boton-estado">
+      <a href="/status">Estado</a>
     </div>
+    <div class="boton-mas">
+      <a href="/purchase">
+        <ion-icon name="add-outline"></ion-icon>
+      </a>
+    </div>
+        
+    
+    </div>
+       
+      
+     
+     
+     
+      
+      
+    
+    
 
 
     {% endblock %}
