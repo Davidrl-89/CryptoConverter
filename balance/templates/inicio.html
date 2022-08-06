@@ -27,13 +27,13 @@
       {% if movs %}
         {% for mov in movs %}
         <tr>
-          <td>{{mov[1] }}</td>
-          <td>{{mov[2] }}</td>
-          <td>{{mov[3] }}</td>
-          <td>{{mov[4] }}</td>
-          <td>{{mov[5] }}</td>
-          <td>{{"{:,.5f}".format(mov[6])}}</td>
-          <td>{{"{:,.5f}".format(movimiento[4]/movimiento[6])}}</td>
+          <td>{{mov.date }}</td>
+          <td>{{mov.time }}</td>
+          <td>{{mov.moneda_from }}</td>
+          <td>{{mov.cantidad_from }}</td>
+          <td>{{mov.moneda_to }}</td>
+          <td>{{mov.cantidad_to}}</td>
+          <td>{{mov.cantidad_from / mov.cantidad_to}}</td>
         </tr>
 
         {% if mov.errores %}
@@ -52,35 +52,17 @@
       </tr>
       {% endif %}
 
-   
-
-
     </table>
-
-   
-
-    <div class="botones">
-    <div class="boton-estado">
-      <a href="/status">Estado</a>
-    </div>
-    <div class="boton-mas">
-      <a href="/purchase">
-        <ion-icon name="add-outline"></ion-icon>
-      </a>
-    </div>
+      <div class="botones">
+        <div class="botones-estado">
+          <a href="/status">Estado</a>
+        </div>
+        <div class="botones-mas">
+          <a href="/purchase">
+            <ion-icon name="add-outline"></ion-icon>
+          </a>
+        </div>
+      </div>
         
-    
-    </div>
-       
-      
+      {% endblock %}
      
-     
-     
-      
-      
-    
-    
-
-
-    {% endblock %}
- 

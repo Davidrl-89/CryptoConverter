@@ -8,7 +8,7 @@ RUTA = 'data/balance.db'
 @app.route("/")
 def inicio():
     db = DBManager(RUTA)
-    movimientos = db.consultaSQL("SELECT * FROM movimientos")
+    movimientos = db.consultaSQL("SELECT * FROM movimientos ORDER BY date")
     return render_template("inicio.html", movs = movimientos)
 
 

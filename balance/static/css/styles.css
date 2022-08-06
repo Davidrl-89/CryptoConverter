@@ -23,7 +23,7 @@ main {
     max-width: 800px;
     margin: auto;
     padding: 0 20px;
-    text-align: center;
+    text-align: left;
 }
 
 table.paper {
@@ -35,19 +35,21 @@ table.paper {
     text-align: left;
 }
 
-.boton-estado {
+
+
+.botones-estado a {
+    text-align: left;
     display: inline-block;
     border: 0px;
     padding: 10px;
     margin-right: 20px;
     color: black;
-    text-align: left;
     
 }
 
-.boton-mas{
-    display: inline-block;
+.botones-mas a {
     text-align: right;
+    display: inline-block;
     border: 0px;
     padding: 10px;
     color: black;
