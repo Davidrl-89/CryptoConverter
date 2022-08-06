@@ -29,7 +29,10 @@ main {
 table.paper {
     width: 100%;
 }
+h1.main_page_title {
+    text-align: center;
 
+}
 .titulo-tabla{
     border-bottom: #19a187 1px solid;
     text-align: left;

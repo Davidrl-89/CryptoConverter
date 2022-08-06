@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 
 from . import app 
 from .models import DBManager
@@ -14,7 +14,9 @@ def inicio():
 
 @app.route("/purchase", methods= ["GET", "POST"])
 def compra():
-    return "crear compras"
+    if request.method == "GET":
+
+        return render_template("purchase.html")
 
 
 
