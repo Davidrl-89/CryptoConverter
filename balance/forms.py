@@ -19,13 +19,13 @@ class movimientosForm(FlaskForm):
     moneda_to = SelectField("To: ", choices=[
         ("EUR", "EUR"), ("BTC", "BTC"), ("ETH", "ETH"), ("LUNA", "LUNA"), ("LINK", "LINK")], validators=[DataRequired(), validar_moneda])
 
-    cantidad_from = FloatField("Cantidad",validators=[DataRequired(message="La cantidad debe de ser un número positivo y mayor que 0"),
+    cantidad_from = FloatField("Q",validators=[DataRequired(message="La cantidad debe de ser un número positivo y mayor que 0"),
     NumberRange(min=0.00001, max=99999999)])
 
     consultar = SubmitField("Consultar")
 
-    cantidad_to = FloatField("Cantidad2")
-    PU = FloatField("Precio unitario: ")
+    cantidad_to = FloatField("Q")
+    PU = FloatField("PU: ")
 
-    borrar = SubmitField("Borrar")
-    aceptar = SubmitField("Guardar")
+    borrar = SubmitField("X")
+    aceptar = SubmitField("√")
