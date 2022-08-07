@@ -11,39 +11,52 @@ Compra de criptomonedas
 {% block contenido %}
 {{ super() }}
 
+{% if errores %}
+    <div class="lista-errores">
+        <p>
+          <ion-icon name="warning-sharp" class="icono-error"></ion-icon>
+        </p>
+        <div class="mensajes-error">
+            {% for error in errores %}
+                <p>{{ error }}</p>
+            {% endfor %}
 
-<form action="/nuevo" method="post">
-  <div class="campo-formulario">
-    <label for="fecha">Fecha</label>
-    <input type="date" id="fecha" name="fecha">
-  </div>
+            {{ form.errors }}
+        </div>
+    </div>
+{% endif %}
 
-  <div class="campo-formulario">
-    <label for="hora">Hora</label>
-    <input type="time" id="hora" name="hora">
-  </div>
+<form class="paper" action="/purchase" method="post">
+    {{ form.csrf_token }}
+    
+    <div class="paper">
+        {{ form.fecha }}
+    
+        {{ form.moneda_from.label }}
+        {{ form.moneda_from }}
+  
+        {{ form.moneda_to.label }}
+        {{ form.moneda_to }}
+   
+  
+        {{ form.cantidad_from.label }}
+        {{ form.cantidad_from }}
 
-  <div class="campo-formulario">
-    <label for="concepto">Concepto</label>
-    <input type="text" id="concepto" name="concepto" required>
-  </div>
+        {{ form.consultar }}
+        
+        {{ form.cantidad_to.label }}
+        {{ form.cantidad_to }}
 
-  <div class="campo-formulario">
-    <input type="radio" name="tipo" id="ingreso" value="I">
-    <label for="ingreso" class="radio-label">Ingreso</label>
-    <input type="radio" name="tipo" id="gasto" value="G" checked>
-    <label for="gasto" class="radio-label">Gasto</label>
-  </div>
+        {{ form.PU.label }}
+        {{ form.PU }}
 
-  <div class="campo-formulario">
-    <label for="cantidad">Cantidad</label>
-    <input type="number" id="cantidad" name="cantidad" required>
-  </div>
 
-  <div class="acciones">
-    <!-- <input type="submit" value="Agregar" -->
-    <button type="submit" class="blue-button">Agregar</button>
-  </div>
+        {{ form.borrar }}
+        {{ form.aceptar }}
 
+    
+
+    </div>
 </form>
+
 {% endblock %}

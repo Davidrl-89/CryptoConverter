@@ -2,6 +2,7 @@ from flask import render_template, request
 
 from . import app 
 from .models import DBManager
+from.forms import movimientosForm
 
 RUTA = 'data/balance.db'
 
@@ -15,8 +16,8 @@ def inicio():
 @app.route("/purchase", methods= ["GET", "POST"])
 def compra():
     if request.method == "GET":
-
-        return render_template("purchase.html")
+        formulario = movimientosForm()
+        return render_template("purchase.html", form = formulario)
 
 
 
