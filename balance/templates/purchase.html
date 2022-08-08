@@ -26,37 +26,97 @@ COMPRA DE CRIPTOS
     </div>
 {% endif %}
 
-<form class="paper" action="/purchase" method="post">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form action="/purchase" method="post">
     {{ form.csrf_token }}
     
-    <div class="paper">
+    <div class="grid">
+
         {{ form.fecha }}
     
         {{ form.moneda_from.label }}
+        <div class="selectfield">
         {{ form.moneda_from }}
-  
+        </div>
+
         {{ form.moneda_to.label }}
         {{ form.moneda_to }}
-   
-  
+    </div>
+
+    <div class="grid">
+        <div class="cantidad_from_label">
         {{ form.cantidad_from.label }}
+        </div>
+        <div class="cantidad_from">
+
         {{ form.cantidad_from }}
-
-        {{ form.consultar }}
         
+        </div>
+
+        <div class="boton-consultar">
+        {{ form.consultar}}
+        </div>
+
+        <div class="cantidad_to_label">
         {{ form.cantidad_to.label }}
-        {{ form.cantidad_to }}
+        </div>
+        <div class="cantidad_to">
+            {% if form.cantidad_to.data %}
+            {{form.cantidad_to.data}}
+            {% else %}
+            0.0
+            {% endif %}
+        </div>
+    </div>
 
+    <div class="grid">
+        <div class="pu_label">
         {{ form.PU.label }}
+        </div>
+        <div class="pu">
+            {% if form.PU.data %}
+            {{form.PU.data}}
+            {% else %}
+            0.0
+            {% endif %}
+        </div>
         {{ form.PU }}
+    </div>
 
 
-        {{ form.borrar }}
+
+
+    <div class="boton-cancelar-comprar">
+        <div class="boton-cancelar">
+            <a href="/" role="button"></a>
+            {{form.borrar }}
+        </div>
+
+        <div class="boton-comprar">
         {{ form.aceptar }}
+        </div>
+    </div>
 
     
 
-    </div>
-</form>
+
+
+    
+</form> 
+
 
 {% endblock %}

@@ -56,3 +56,58 @@ button {
   background-color: transparent;
   color: black;
 }
+
+
+/*  AQUI EMPEZARIA EL PURCHASE      */
+
+
+.grid {
+  display: flex;
+  justify-content: space-between;
+  
+  width: 100px;
+  padding: 0 1rem;
+  max-width: 800px;
+  gap: 5em;
+
+
+}
+
+.moneda_to {
+  display: flex;
+  text-align: right;
+  height: 60px;
+  justify-content: end;
+  gap: 5px;
+  margin-left: auto;
+}
+
+
+.boton-cancelar-comprar {
+  background-color: transparent;
+  color: black;
+  display: flex;
+  text-align: right;
+  height: 40px;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+
+.container-pu {
+  display: flex;
+  justify-content: end;
+  gap: 15px;
+  height: 82px;
+}
+
+.pu {
+  display: flex;
+  text-align: right;
+  height: 60px;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 15px;
+
+}
