@@ -22,7 +22,7 @@ class movimientosForm(FlaskForm):
     cantidad_from = FloatField("Q",validators=[DataRequired(message="La cantidad debe de ser un número positivo y mayor que 0"),
     NumberRange(min=0.00001, max=99999999)])
 
-    consultar = SubmitField("Consultar")
+    consultar = SubmitField("Calcular")
 
     cantidad_to = FloatField("Q")
     PU = FloatField("PU: ")
