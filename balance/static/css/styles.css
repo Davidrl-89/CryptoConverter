@@ -68,20 +68,50 @@ button {
   width: 100px;
   padding: 0 1rem;
   max-width: 800px;
-  gap: 5em;
+  gap: 15em;
 
+}
+
+.moneda_from {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  height: 100%;
 
 }
 
 .moneda_to {
   display: flex;
-  text-align: right;
-  height: 60px;
-  justify-content: end;
-  gap: 5px;
-  margin-left: auto;
+  justify-content: space-between;
+  gap: 10px;
+  height: 100%;
 }
 
+.cantidad_from {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  height: 100%;
+}  
+
+
+.cantidad_to {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  height: 100%;
+}
+ 
+.pu {
+  display: flex;
+  text-align: right;
+  height: 100%;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 15px;
+
+}
 
 .boton-cancelar-comprar {
   background-color: transparent;
@@ -94,20 +124,3 @@ button {
   margin-top: 15px;
 }
 
-
-.container-pu {
-  display: flex;
-  justify-content: end;
-  gap: 15px;
-  height: 82px;
-}
-
-.pu {
-  display: flex;
-  text-align: right;
-  height: 60px;
-  justify-content: end;
-  gap: 10px;
-  margin-top: 15px;
-
-}

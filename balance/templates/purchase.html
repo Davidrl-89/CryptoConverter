@@ -26,75 +26,50 @@ COMPRA DE CRIPTOS
     </div>
 {% endif %}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <form action="/purchase" method="post">
     {{ form.csrf_token }}
     
     <div class="grid">
-
-        {{ form.fecha }}
-    
+        <div class="moneda_from">
         {{ form.moneda_from.label }}
-        <div class="selectfield">
         {{ form.moneda_from }}
         </div>
 
+        <div class="moneda_to">
         {{ form.moneda_to.label }}
         {{ form.moneda_to }}
+        </div>
+        
     </div>
 
     <div class="grid">
-        <div class="cantidad_from_label">
-        {{ form.cantidad_from.label }}
-        </div>
         <div class="cantidad_from">
-
+        {{ form.cantidad_from.label }}
         {{ form.cantidad_from }}
-        
         </div>
+     
 
         <div class="boton-consultar">
         {{ form.consultar}}
         </div>
 
-        <div class="cantidad_to_label">
-        {{ form.cantidad_to.label }}
-        </div>
+
         <div class="cantidad_to">
-            {% if form.cantidad_to.data %}
-            {{form.cantidad_to.data}}
-            {% else %}
-            0.0
-            {% endif %}
+            {{ form.cantidad_to.label }}
+            {{form.cantidad_to}}
         </div>
+     
     </div>
 
+    
+        
     <div class="grid">
-        <div class="pu_label">
-        {{ form.PU.label }}
-        </div>
         <div class="pu">
-            {% if form.PU.data %}
-            {{form.PU.data}}
-            {% else %}
-            0.0
-            {% endif %}
-        </div>
+        {{ form.PU.label }}
         {{ form.PU }}
+        </div>
+        
+         
     </div>
 
 
