@@ -95,6 +95,18 @@ button {
   height: 100%;
 }  
 
+input#aceptar {
+  background-color: transparent;
+  color: black;
+}
+
+input#borrar {
+  background-color: transparent;
+  color: black;
+}
+
+
+
 
 .cantidad_to {
   display: flex;

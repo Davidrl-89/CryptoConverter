@@ -1,5 +1,9 @@
 import sqlite3
 
+import requests
+
+from . import apikey
+
 class DBManager:
     def __init__(self, ruta):
         self.ruta = ruta
@@ -26,3 +30,45 @@ class DBManager:
         conexion.close()
 
         return self.movimientos
+
+
+    def consultaConParametros(self, consulta, params):
+        conexion = sqlite3.connect(self.ruta)
+        cursor = conexion.cursor()
+        resultado = False
+        try:
+            cursor.execute(consulta, params)
+            conexion.commit()
+            resultado = True
+        except Exception as error:
+            print("ERROR DB:" , error)
+            conexion.rollback()
+        conexion.close()
+
+        return resultado
+
+class APIError(Exception):
+    pass
+
+class CriptoModel:
+
+    def __init__(self, origen, destino):
+        self.moneda_origen = origen
+        self.moneda_destino = destino
+        self.cambio = 0.0
+
+    def consultar_cambio(self):
+        cabeceras = {
+            "X-CoinAPI-Key": apikey
+        }
+        url = f"http://rest.coinapi.io/v1/exchangerate/{self.moneda_origen}/{self.moneda_destino}"
+        respuesta = requests.get(url, headers=cabeceras)
+
+        if respuesta.status_code == 200:
+            self.cambio = respuesta.json()["rate"]
+        else:
+            print(respuesta.text)
+            raise APIError(
+                "Ha ocurrido un error {} {} al consultar la API".format(
+                    respuesta.status_code, respuesta.reason)
+            )

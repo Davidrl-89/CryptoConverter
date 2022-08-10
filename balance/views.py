@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, redirect ,request, url_for 
 
 from . import app 
 from .models import DBManager
@@ -18,6 +18,8 @@ def compra():
     if request.method == "GET":
         formulario = movimientosForm()
         return render_template("purchase.html", form = formulario)
+    else:
+        formulario = movimientosForm(data=request.form)
 
 
 
