@@ -65,10 +65,12 @@ class CriptoModel:
         respuesta = requests.get(url, headers=cabeceras)
 
         if respuesta.status_code == 200:
+
             self.cambio = respuesta.json()["rate"]
         else:
-            print(respuesta.text)
             raise APIError(
-                "Ha ocurrido un error {} {} al consultar la API".format(
-                    respuesta.status_code, respuesta.reason)
+                "Ha ocurrido un error {} {} al consultar la API.".format(
+                    respuesta.status_code, respuesta.reason
+                )
             )
+   

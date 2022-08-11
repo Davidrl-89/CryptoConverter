@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+{{ super() }}: Estado de la inversión
+{% endblock %}
+
+{% block page_title %}
+ESTADO DE LA INVERSIÓN
+{% endblock %}
+
+{% block contenido %}
+{{ super() }}
+
+<form action="" method="post">
+  {{ form.csrf_token }}
+
+  <div class="grid">
+    <div class="invertido">
+    {{ form.invertido.label }}
+    {{ form.invertido }}
+    </div>
+  </div>
+
+
+  <div class="grid">
+    <div class="valor_actual">
+    {{ form.valor_actual.label }}
+    {{ form.valor_actual }}
+    </div>
+  </div>
+  
+  <div class="boton-volver">
+
+    <a href="/" role="button">Volver</a>
+    
+
+  </div>
+
+</form>
+{% endblock %}

@@ -136,3 +136,29 @@ input#borrar {
   margin-top: 15px;
 }
 
+.invertido {
+  display: flex;
+  gap: 10px;
+}
+
+.valor_actual {
+  display: flex;
+  gap: 10px;
+}
+
+input#invertido {
+  text-align: center;
+  gap: 10em;
+}
+
+input#valor_actual {
+  text-align: center;
+}
+ 
+div.boton-volver a {
+  display: flex;
+  color: black;
+  font-size:x-large;
+  justify-content: end;
+}
+

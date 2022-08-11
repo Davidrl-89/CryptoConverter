@@ -29,3 +29,9 @@ class movimientosForm(FlaskForm):
 
     borrar = SubmitField("X")
     aceptar = SubmitField("√")
+
+
+class EstadoForm(FlaskForm):
+    invertido = FloatField("Invertido: ", render_kw={'readonly': True})
+    valor_actual = FloatField("Valor actual: ", render_kw={'readonly': True})
+    
