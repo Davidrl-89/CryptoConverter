@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import  DateField, FloatField ,HiddenField ,TimeField ,SelectField, SubmitField
-from wtforms.validators import DataRequired, NumberRange ,ValidationError
+from wtforms.validators import DataRequired, NumberRange 
 
 
 
@@ -27,7 +27,3 @@ class movimientosForm(FlaskForm):
     aceptar = SubmitField("√")
 
 
-class EstadoForm(FlaskForm):
-    invertido = FloatField("Invertido: ", render_kw={'readonly': True})
-    valor_actual = FloatField("Valor actual: ", render_kw={'readonly': True})
-    
