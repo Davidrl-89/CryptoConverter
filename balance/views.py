@@ -2,7 +2,7 @@ from flask import flash ,render_template, redirect ,request, url_for
 
 from . import app 
 from .models import DBManager, CriptoModel
-from .forms import EstadoForm, movimientosForm
+from .forms import  movimientosForm
 from datetime import date, datetime
 
 
@@ -18,6 +18,7 @@ def inicio():
         flash("Error de la BBDD, inténtelo más tarde",
             category="fallo")
         return render_template("inicio.html")
+        
 
 @app.route("/purchase", methods= ["GET", "POST"])
 def compra():
@@ -76,21 +77,60 @@ def compra():
 
         else:
             return redirect(url_for("inicio"))
-
-
-
-
-
-
-
-
-
-
-
-
-
    
-@app.route("/status")
+@app.route("/status", methods=["GET"])
 def estado():
-    formulario = EstadoForm()
-    return render_template("status.html", form=formulario)
+    try:
+        db = DBManager(RUTA)
+        euros_to = db.saldo_euros_invertidos(
+            "SELECT sum(cantidad_to) FROM movimientos WHERE moneda_to='EUR'")
+        euros_to = euros_to[0]
+        euros_from = db.saldo_euros_invertidos(
+            "SELECT sum(cantidad_from) FROM movimientos WHERE moneda_from='EUR'")
+        euros_from = euros_from[0]
+        saldo_euros_invertidos = euros_to-euros_from
+        saldo_euros_invertidos = round(saldo_euros_invertidos, 8)
+        total_euros_ivertidos = euros_from
+
+
+       
+        cripto_from = db.total_euros_invertidos(
+            "SELECT moneda_from, sum(cantidad_from) FROM movimientos GROUP BY moneda_from")
+        totales_from = []
+        try:
+
+            for valor_from in cripto_from:
+                cripto = CriptoModel(valor_from[0], "EUR")
+                resultado = cripto.consultar_cambio()
+                resultado = cripto.cambio
+                resultado = float(resultado)
+                resultado = resultado*valor_from[1]
+                resultado = totales_from.append(resultado)
+            suma_valor_from = sum(totales_from)
+
+      
+            cripto_to = db.total_euros_invertidos(
+                "SELECT moneda_to, sum(cantidad_to) FROM movimientos GROUP BY moneda_to")
+
+            totales_to = []
+            
+            for valor_to in cripto_to:
+                cripto = CriptoModel(valor_to[0], "EUR")
+                resultado = cripto.consultar_cambio()
+                resultado = cripto.cambio
+                resultado = float(resultado)
+                resultado = resultado*valor_to[1]
+                resultado = totales_to.append(resultado)
+            
+            suma_valor_to = sum(totales_to)
+
+            inversion_atrapada = suma_valor_to - suma_valor_from
+            valor_actual = total_euros_ivertidos + saldo_euros_invertidos + inversion_atrapada
+            valor_actual = round(valor_actual, 8)
+            return render_template("status.html", euros_to=euros_to, euros_from=euros_from, saldo_euros_invertidos=saldo_euros_invertidos, valoractual=valor_actual)
+        except:
+            return render_template("status.html", errores=["Ha fallado la Conexión a la API"])
+    except:
+        flash("Error de conexión de BBDD, inténtelo más tarde",
+              category="fallo")
+        return render_template("status.html")

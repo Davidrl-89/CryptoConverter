@@ -47,6 +47,28 @@ class DBManager:
 
         return resultado
 
+
+    def saldo_euros_invertidos(self, consulta):
+        conexion = sqlite3.connect(self.ruta)
+        cursor = conexion.cursor()
+        cursor.execute(consulta)
+        datos = cursor.fetchone()
+        conexion.commit()
+        conexion.close()
+        return datos
+
+    def total_euros_invertidos(self, consulta):
+        conexion = sqlite3.connect(self.ruta)
+        cursor = conexion.cursor()
+        cursor.execute(consulta)
+        datos = cursor.fetchall()
+        conexion.commit()
+        conexion.close()
+        return datos
+
+
+
+
 class APIError(Exception):
     pass
 

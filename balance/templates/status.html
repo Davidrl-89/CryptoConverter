@@ -11,30 +11,28 @@ ESTADO DE LA INVERSIÓN
 {% block contenido %}
 {{ super() }}
 
-<form action="" method="post">
-  {{ form.csrf_token }}
 
-  <div class="grid">
-    <div class="invertido">
-    {{ form.invertido.label }}
-    {{ form.invertido }}
-    </div>
+{% if errores %}
+<div class="lista-errores">
+  <p>
+    <ion-icon name="warning-sharp" class="icono-error"></ion-icon>
+  </p>
+  <div>
+    {% for error in errores %}
+    <p>{{ error }}</p>
+    {% endfor %}
   </div>
+</div>
+{% endif %}
 
-
-  <div class="grid">
-    <div class="valor_actual">
-    {{ form.valor_actual.label }}
-    {{ form.valor_actual }}
-    </div>
-  </div>
-  
-  <div class="boton-volver">
-
-    <a href="/" role="button">Volver</a>
-    
-
-  </div>
-
+<form class="paper" action="/purchase" method="GET">
+  <label for="q_to"> Invertido: {{saldo_euros_invertidos}} </label>
+  <a name="q_to" id="q_to"></a>
+  <br>
+  <label for="pu"> Valor Actual: {{valoractual}}</label>
+  <a name="pu" id="pu"></a>
+  <br>
+  <br>
+  <button type="return" name="return" id="return">Volver</button>
 </form>
 {% endblock %}
