@@ -32,8 +32,8 @@
           <td>{{mov.moneda_from }}</td>
           <td>{{mov.cantidad_from }}</td>
           <td>{{mov.moneda_to }}</td>
-          <td>{{mov.cantidad_to}}</td>
-          <td>{{mov.cantidad_from / mov.cantidad_to}}</td>
+          <td>{{"{:,.5f}".format(mov.cantidad_to)}}</td>
+          <td>{{"{:,.5f}".format(mov.cantidad_from / mov.cantidad_to)}}</td>
         </tr>
 
         {% if mov.errores %}
