@@ -11,20 +11,8 @@ COMPRA DE CRIPTOS
 {% block contenido %}
 {{ super() }}
 
-{% if errores %}
-    <div class="lista-errores">
-        <p>
-          <ion-icon name="warning-sharp" class="icono-error"></ion-icon>
-        </p>
-        <div class="mensajes-error">
-            {% for error in errores %}
-                <p>{{ error }}</p>
-            {% endfor %}
 
-            {{ form.errors }}
-        </div>
-    </div>
-{% endif %}
+
 
 <form action="/purchase" method="post">
     {{ form.csrf_token }}
@@ -33,11 +21,21 @@ COMPRA DE CRIPTOS
         <div class="moneda_from">
         {{ form.moneda_from.label }}
         {{ form.moneda_from }}
+        {% if form.moneda_from.errors %}
+            {% for error in form.moneda_from.errors %}
+                {{error}}
+            {% endfor %}
+        {% endif %}
         </div>
 
         <div class="moneda_to">
         {{ form.moneda_to.label }}
         {{ form.moneda_to }}
+        {% if form.moneda_to.errors %}
+            {% for error in form.moneda_to.errors %}
+                {{error}}
+             {% endfor %}
+        {% endif %}
         </div>
         
     </div>
@@ -56,7 +54,7 @@ COMPRA DE CRIPTOS
 
         <div class="cantidad_to">
             {{ form.cantidad_to.label }}
-            {{form.cantidad_to}}
+            {{ form.cantidad_to }}
         </div>
      
     </div>
@@ -85,13 +83,5 @@ COMPRA DE CRIPTOS
         {{ form.aceptar }}
         </div>
     </div>
-
-    
-
-
-
-    
 </form> 
-
-
 {% endblock %}
