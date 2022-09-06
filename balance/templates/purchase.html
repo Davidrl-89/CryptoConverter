@@ -30,11 +30,7 @@ COMPRA DE CRIPTOS
 
         <div class="moneda_to">
         {{ form.moneda_to.label }}
-        {% if form.moneda_to.data %}
-            {{form.moneda_to(readonly=True)}}
-        {% else %}
-            {{ form.moneda_to }}
-        {% endif %}
+        {{ form.moneda_to }}
         {% if form.moneda_to.errors %}
             {% for error in form.moneda_to.errors %}
                 {{error}}
@@ -47,11 +43,10 @@ COMPRA DE CRIPTOS
     <div class="grid">
         <div class="cantidad_from">
         {{ form.cantidad_from.label }}
-        {{ form.cantidad_from }}
-        {% if form.cantidad_from.errors %}
-            {% for error in form.cantidad_from.errors %}
-                {{error}}
-            {% endfor %}
+        {% if form.cantidad_from.data %}
+            {{ form.cantidad_from(readonly=True) }}
+        {% else %}
+            {{ form.cantidad_from }}
         {% endif %}
         </div>
      
