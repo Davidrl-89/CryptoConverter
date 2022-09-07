@@ -22,8 +22,7 @@ class movimientosForm(FlaskForm):
 
     consultar = SubmitField("Calcular")
 
-    cantidad_to = FloatField("Q:  ")
-    PU = FloatField("PU: ")
+    
 
     borrar = SubmitField("X")
     aceptar = SubmitField("√")

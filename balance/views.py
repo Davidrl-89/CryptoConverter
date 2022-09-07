@@ -35,16 +35,26 @@ def compra():
         cantidad_from = float(round(cantidad_from, 8))
 
         convertir = CriptoModel(moneda_from, moneda_to)
-        convertir.consultar_cambio()
-        
-        PU = convertir.cambio
+        PU = convertir.consultar_cambio()
+        PU = float(round(PU, 8))
+        cantidad_to = cantidad_from * PU
+        cantidad_to = float(round(cantidad_to, 8))
+
+
+
+
+
+
+
+        '''
+        convertir.cambio = PU
         PU = float(round(PU, 8))
 
         cantidad_to = PU * cantidad_from
         cantidad_to = float(round(cantidad_to, 8))
 
         form.PU = PU
-        form.cantidad_to = cantidad_to
+        form.cantidad_to = cantidad_to'''
 
       
         if form.consultar.data:
