@@ -40,23 +40,6 @@ def compra():
         cantidad_to = cantidad_from * PU
         cantidad_to = float(round(cantidad_to, 8))
 
-
-
-
-
-
-
-        '''
-        convertir.cambio = PU
-        PU = float(round(PU, 8))
-
-        cantidad_to = PU * cantidad_from
-        cantidad_to = float(round(cantidad_to, 8))
-
-        form.PU = PU
-        form.cantidad_to = cantidad_to'''
-
-      
         if form.consultar.data:
             return render_template("purchase.html", form= form, cantidad_to = cantidad_to, PU = PU)
 
