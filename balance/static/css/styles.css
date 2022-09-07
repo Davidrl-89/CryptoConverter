@@ -143,3 +143,11 @@ input#borrar {
   display: flex;
   align-items: center;
 }
+
+div.boton-volver {
+   text-align: right;   
+}
+
+.boton-volver a {
+  color: black;
+}

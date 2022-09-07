@@ -88,8 +88,8 @@ def estado():
         euros_from = db.saldo_euros_invertidos(
             "SELECT sum(cantidad_from) FROM movimientos WHERE moneda_from='EUR'")
         euros_from = euros_from[0]
-        saldo_euros_invertidos = euros_to-euros_from
-        saldo_euros_invertidos = round(saldo_euros_invertidos, 8)
+        saldo_euros_invertidos = euros_to - euros_from
+        saldo_euros_invertidos = round(saldo_euros_invertidos, 6)
         total_euros_ivertidos = euros_from
 
 
@@ -100,12 +100,12 @@ def estado():
         try:
 
             for valor_from in cripto_from:
-                cripto = CriptoModel(valor_from[0], "EUR")
-                resultado = cripto.consultar_cambio()
-                resultado = cripto.cambio
-                resultado = float(resultado)
-                resultado = resultado*valor_from[1]
-                resultado = totales_from.append(resultado)
+                convertir = CriptoModel(valor_from[0], "EUR")
+                valor = convertir.consultar_cambio()
+                valor = convertir.cambio
+                valor = float(valor)
+                valor = valor * valor_from[1]
+                valor = totales_from.append(valor)
             suma_valor_from = sum(totales_from)
 
       
@@ -115,12 +115,12 @@ def estado():
             totales_to = []
             
             for valor_to in cripto_to:
-                cripto = CriptoModel(valor_to[0], "EUR")
-                resultado = cripto.consultar_cambio()
-                resultado = cripto.cambio
-                resultado = float(resultado)
-                resultado = resultado*valor_to[1]
-                resultado = totales_to.append(resultado)
+                convertir = CriptoModel(valor_to[0], "EUR")
+                valor = convertir.consultar_cambio()
+                valor = convertir.cambio
+                valor = float(valor)
+                valor = valor * valor_to[1]
+                valor = totales_to.append(valor)
             
             suma_valor_to = sum(totales_to)
 
