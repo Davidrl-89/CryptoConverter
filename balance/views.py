@@ -24,24 +24,28 @@ def inicio():
 def compra():
 
     if request.method == "GET":
-        formulario = movimientosForm()
-        return render_template("purchase.html", form=formulario)
+        form = movimientosForm()
+        return render_template("purchase.html", form=form)
     else:
-        form = movimientosForm(data=request.form)
+        try:
+            form = movimientosForm(data=request.form)
 
-        moneda_from = form.moneda_from.data
-        moneda_to = form.moneda_to.data
-        cantidad_from = form.cantidad_from.data
-        cantidad_from = float(round(cantidad_from, 8))
+            moneda_from = form.moneda_from.data
+            moneda_to = form.moneda_to.data
+            cantidad_from = form.cantidad_from.data
+            cantidad_from = float(round(cantidad_from, 8))
 
-        convertir = CriptoModel(moneda_from, moneda_to)
-        PU = convertir.consultar_cambio()
-        PU = float(round(PU, 8))
-        cantidad_to = cantidad_from * PU
-        cantidad_to = float(round(cantidad_to, 8))
+            convertir = CriptoModel(moneda_from, moneda_to)
+            PU = convertir.consultar_cambio()
+            PU = float(round(PU, 8))
+            cantidad_to = cantidad_from * PU
+            cantidad_to = float(round(cantidad_to, 8))
 
-        if form.consultar.data:
-            return render_template("purchase.html", form= form, cantidad_to = cantidad_to, PU = PU)
+            if form.consultar.data:
+                return render_template("purchase.html", form= form, cantidad_to = cantidad_to, PU = PU)
+
+        except:
+            return render_template("purchase.html", form=form, errores=["Ha fallado la conexión con la API"])
 
         if form.aceptar.data:
             if form.validate():
@@ -122,7 +126,7 @@ def estado():
             valor_actual = round(valor_actual, 8)
             return render_template("status.html", euros_to=euros_to, euros_from=euros_from, saldo_euros_invertidos=saldo_euros_invertidos, valoractual=valor_actual)
         except:
-            return render_template("status.html", errores=["Ha fallado la Conexión a la API"])
+            return render_template("status.html", errores=["Ha fallado la Conexión con la API"])
     except:
         flash("Error de conexión de BBDD, inténtelo más tarde",
               category="fallo")
