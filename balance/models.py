@@ -4,6 +4,7 @@ import requests
 
 from . import apikey
 
+
 class DBManager:
     def __init__(self, ruta):
         self.ruta = ruta
@@ -18,7 +19,7 @@ class DBManager:
 
         for desc_columna in cursor.description:
             nombres_columnas.append(desc_columna[0])
-     
+
         datos = cursor.fetchall()
         for dato in datos:
             movimiento = {}
@@ -31,7 +32,6 @@ class DBManager:
 
         return self.movimientos
 
-
     def consultaConParametros(self, consulta, params):
         conexion = sqlite3.connect(self.ruta)
         cursor = conexion.cursor()
@@ -41,12 +41,11 @@ class DBManager:
             conexion.commit()
             resultado = True
         except Exception as error:
-            print("ERROR DB:" , error)
+            print("ERROR DB:", error)
             conexion.rollback()
         conexion.close()
 
         return resultado
-
 
     def saldo_euros_invertidos(self, consulta):
         conexion = sqlite3.connect(self.ruta)
@@ -66,11 +65,25 @@ class DBManager:
         conexion.close()
         return datos
 
+    def calcular_saldo(self, moneda):
+        consulta_compras = "SELECT sum(cantidad_to) FROM movimientos WHERE moneda_to = '" + \
+            moneda + "'"
+        consulta_ventas = "SELECT sum(cantidad_from) FROM movimientos WHERE moneda_from = '" + \
+            moneda + "'"
 
+        datos_compras = self.consultaSQL(consulta_compras)
+        datos_ventas = self.consultaSQL(consulta_ventas)
+        if datos_ventas[0]["sum(cantidad_from)"] == None and datos_compras[0]["sum(cantidad_to)"] == None:
+            return 0
+        elif datos_ventas[0]["sum(cantidad_from)"] == None:
+            return datos_compras[0]["sum(cantidad_to)"]
+        else:
+            return datos_compras[0]["sum(cantidad_to)"] - datos_ventas[0]["sum(cantidad_from)"]
 
 
 class APIError(Exception):
     pass
+
 
 class CriptoModel:
 
@@ -89,12 +102,10 @@ class CriptoModel:
         if respuesta.status_code == 200:
             self.cambio = respuesta.json()["rate"]
             return(self.cambio)
-    
+
         else:
             raise APIError(
                 "Ha ocurrido un error {} {} al consultar la API.".format(
                     respuesta.status_code, respuesta.reason
                 )
             )
-        
-  

@@ -1,26 +1,27 @@
-from flask import flash ,render_template, redirect ,request, url_for 
+from flask import flash, render_template, redirect, request, url_for
 
-from . import app 
+from . import app
 from .models import DBManager, CriptoModel
-from .forms import  movimientosForm
+from .forms import movimientosForm
 from datetime import date, datetime
 
 
 RUTA = 'data/balance.db'
+
 
 @app.route("/")
 def inicio():
     try:
         db = DBManager(RUTA)
         movimientos = db.consultaSQL("SELECT * FROM movimientos ORDER BY date")
-        return render_template("inicio.html", movs = movimientos)
+        return render_template("inicio.html", movs=movimientos)
     except:
         flash("Error de la BBDD, inténtelo más tarde",
-            category="fallo")
+              category="fallo")
         return render_template("inicio.html")
-        
 
-@app.route("/purchase", methods= ["GET", "POST"])
+
+@app.route("/purchase", methods=["GET", "POST"])
 def compra():
 
     if request.method == "GET":
@@ -41,8 +42,13 @@ def compra():
             cantidad_to = cantidad_from * PU
             cantidad_to = float(round(cantidad_to, 8))
 
+            saldo = DBManager(RUTA).calcular_saldo(moneda_from)
+            if  moneda_from != 'EUR' and saldo < float(cantidad_from):
+                flash("No tienes suficientes monedas {} ".format(moneda_from))
+                return render_template("purchase.html", form=form)
+
             if form.consultar.data:
-                return render_template("purchase.html", form= form, cantidad_to = cantidad_to, PU = PU)
+                return render_template("purchase.html", form=form, cantidad_to=cantidad_to, PU=PU)
 
         except:
             return render_template("purchase.html", form=form, errores=["Ha fallado la conexión con la API"])
@@ -59,22 +65,24 @@ def compra():
                 fecha = form.fecha.data
                 form.hora.data = datetime.today().strftime("%H:%M:%S")
                 hora = form.hora.data
-                params = (fecha, hora, moneda_from, cantidad_from, moneda_to, cantidad_to)
+                params = (fecha, hora, moneda_from,
+                          cantidad_from, moneda_to, cantidad_to)
                 resultado = db.consultaConParametros(consulta, params)
 
                 if resultado:
                     flash("Movimiento actualizado correctamente", category="exito")
                     return redirect(url_for("inicio"))
-                
+
                 else:
-                    return render_template("purchase.html", form=form, cantidad_to= cantidad_to, errores=["Ha fallado la conexión con las Base de datos"])
+                    return render_template("purchase.html", form=form, cantidad_to=cantidad_to, errores=["Ha fallado la conexión con las Base de datos"])
 
             else:
-                return render_template("purchase.html", form=form, cantidad_to= cantidad_to, errores=["Ha fallado la validación de datos"] )
+                return render_template("purchase.html", form=form, cantidad_to=cantidad_to, errores=["Ha fallado la validación de datos"])
 
         else:
             return redirect(url_for("inicio"))
-   
+
+
 @app.route("/status", methods=["GET"])
 def estado():
     try:
@@ -110,7 +118,7 @@ def estado():
                 "SELECT moneda_to, sum(cantidad_to) FROM movimientos GROUP BY moneda_to")
 
             totales_to = []
-            
+
             for valor_to in cripto_to:
                 convertir = CriptoModel(valor_to[0], "EUR")
                 valor = convertir.consultar_cambio()
@@ -118,11 +126,12 @@ def estado():
                 valor = float(valor)
                 valor = valor * valor_to[1]
                 valor = totales_to.append(valor)
-            
+
             suma_valor_to = sum(totales_to)
 
             inversion_atrapada = suma_valor_to - suma_valor_from
-            valor_actual = total_euros_ivertidos + saldo_euros_invertidos + inversion_atrapada
+            valor_actual = total_euros_ivertidos + \
+                saldo_euros_invertidos + inversion_atrapada
             valor_actual = round(valor_actual, 8)
             return render_template("status.html", euros_to=euros_to, euros_from=euros_from, saldo_euros_invertidos=saldo_euros_invertidos, valoractual=valor_actual)
         except:
