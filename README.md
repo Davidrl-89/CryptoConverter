@@ -22,10 +22,10 @@ Para un correcto funcionamiento de la app, sigue estos pasos:
      Definir las variables de entorno: ```FLASK_APP=run```
      ```FLASK_ENV=development```
 
-* **6. Obtener APIKey**:
+* **5. Obtener APIKey**:
 	Visitar la página [CoinAPI](https://www.coinapi.io/) para conseguir tu 	APIkey(	[obtener gratis aquí](https://www.coinapi.io/pricing?apikey))
 
-* **7. Creación de BBDD**:
+* **6. Creación de BBDD**:
 Descargar gestor de BBDD sqlite en el siguiente enlace: [sqlitebrowser](https://sqlitebrowser.org/dl/)
 
 Abrir el archivo ```..balance/data/balance.db```en el programa y ejecutarlo.
