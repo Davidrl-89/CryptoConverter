@@ -1,9 +1,10 @@
 from flask import flash, render_template, redirect, request, url_for
 
 from . import app
-from .models import DBManager, CriptoModel
+from .models import APIError, DBManager, CriptoModel, Saldo
 from .forms import movimientosForm
 from datetime import date, datetime
+from . import monedas_disponibles
 
 
 RUTA = 'data/balance.db'
@@ -43,15 +44,17 @@ def compra():
             cantidad_to = float(round(cantidad_to, 8))
 
             saldo = DBManager(RUTA).calcular_saldo(moneda_from)
-            if  moneda_from != 'EUR' and saldo < float(cantidad_from):
+            if moneda_from != 'EUR' and saldo < float(cantidad_from):
                 flash("No tienes suficientes monedas {} ".format(moneda_from))
                 return render_template("purchase.html", form=form)
 
+            
             if form.consultar.data:
                 return render_template("purchase.html", form=form, cantidad_to=cantidad_to, PU=PU)
 
-        except:
-            return render_template("purchase.html", form=form, errores=["Ha fallado la conexión con la API"])
+        except APIError as err:
+            flash(err)
+            return render_template("purchase.html", form=form)
 
         if form.aceptar.data:
             if form.validate():
@@ -80,25 +83,23 @@ def compra():
                 return render_template("purchase.html", form=form, cantidad_to=cantidad_to, errores=["Ha fallado la validación de datos"])
 
         else:
-            return redirect(url_for("inicio"))
+            return redirect(url_for("compra"))
 
 
 @app.route("/status", methods=["GET"])
 def estado():
     try:
         db = DBManager(RUTA)
-        euros_to = db.saldo_euros_invertidos(
+        euros_to = db.consultar_saldo(
             "SELECT sum(cantidad_to) FROM movimientos WHERE moneda_to='EUR'")
         euros_to = euros_to[0]
-        euros_from = db.saldo_euros_invertidos(
+        euros_from = db.consultar_saldo(
             "SELECT sum(cantidad_from) FROM movimientos WHERE moneda_from='EUR'")
         euros_from = euros_from[0]
         saldo_euros_invertidos = euros_to - euros_from
         saldo_euros_invertidos = round(saldo_euros_invertidos, 6)
         total_euros_ivertidos = euros_from
 
-
-       
         cripto_from = db.total_euros_invertidos(
             "SELECT moneda_from, sum(cantidad_from) FROM movimientos GROUP BY moneda_from")
         totales_from = []
@@ -113,7 +114,6 @@ def estado():
                 valor = totales_from.append(valor)
             suma_valor_from = sum(totales_from)
 
-      
             cripto_to = db.total_euros_invertidos(
                 "SELECT moneda_to, sum(cantidad_to) FROM movimientos GROUP BY moneda_to")
 
@@ -134,9 +134,25 @@ def estado():
                 saldo_euros_invertidos + inversion_atrapada
             valor_actual = round(valor_actual, 8)
             return render_template("status.html", euros_to=euros_to, euros_from=euros_from, saldo_euros_invertidos=saldo_euros_invertidos, valoractual=valor_actual)
-        except:
-            return render_template("status.html", errores=["Ha fallado la Conexión con la API"])
+        except APIError as error:
+            return render_template("status.html", errores=[error])
     except:
         flash("Error de conexión de BBDD, inténtelo más tarde",
               category="fallo")
         return render_template("status.html")
+
+
+@app.route("/saldo")
+def saldo():
+    try:
+        db = DBManager(RUTA)
+        saldos = []
+        for moneda in monedas_disponibles:
+            if moneda != "EUR":
+                saldo = db.calcular_saldo(moneda)
+                saldos.append(Saldo(moneda, saldo))
+        return render_template("saldo.html", saldos=saldos)
+    except:
+        flash("Error de la BBDD, inténtelo más tarde",
+              category="fallo")
+        return render_template("saldo.html")

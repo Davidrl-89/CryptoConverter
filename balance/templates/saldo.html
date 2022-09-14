@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+{{ super() }}: Consulta tus saldos
+{% endblock %}
+
+{% block page_title %}
+CONSULTA TUS SALDOS 
+{% endblock %}
+
+{% block contenido %}
+{{ super() }}
+
+
+<table class="paper">
+  <tr>
+    <th class="titulo-tabla">Moneda</th>
+    <th class="titulo-tabla">Saldo</th>
+  </tr>
+
+  {% if saldos %}
+  {% for saldo in saldos %}
+  <tr>
+    <td>{{saldo.moneda}}</td>
+    <td>{{saldo.saldo }}</td>
+  </tr>
+  {% endfor%}
+  {% endif%}
+
+</table>  
+
+<div class="boton-volver">
+  <a href="/" role="button">Volver</a>
+</div>
+
+
+
+
+{% endblock %}
